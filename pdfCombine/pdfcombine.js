@@ -1,36 +1,34 @@
 async function combinePDFs() {
     try {
-        const fileInput1 = document.getElementById('file1');
-        const fileInput2 = document.getElementById('file2');
+        const elements = [
+            ...document.getElementsByTagName('input')
+        ];
 
-        const file1 = fileInput1.files[0];
-        const file2 = fileInput2.files[0];
-
-        if (!file1 || !file2) {
-            throw new Error('Please select two PDF files')
+        const files = [];
+        for (const element of elements) {
+            // Handles cases where multiple files were added within a single "input" element
+            for (const file of element.files) {
+                files.push(file);
+            };
         }
 
-        const pdfDoc = await PDFLib.PDFDocument.create();
-        const [firstPdfBytes, secondPdfBytes] = await Promise.all([
-            file1.arrayBuffer(),
-            file2.arrayBuffer()
-        ]);
+        // Check if we got at least two files
+        if (files.length < 2) {
+            throw new Error('Please select two PDF files');
+        }
 
-        const firstPdfDoc = await PDFLib.PDFDocument.load(firstPdfBytes);
-        const secondPdfDoc = await PDFLib.PDFDocument.load(secondPdfBytes);
-        
-        const pages1 = await pdfDoc.copyPages(firstPdfDoc, firstPdfDoc.getPageIndices());
-        const pages2 = await pdfDoc.copyPages(secondPdfDoc, secondPdfDoc.getPageIndices());
+        const resultPDF = await PDFLib.PDFDocument.create();
+        // Iterate over all the pages in each PDF file and append them to the new output PDF
+        for (const file of files) {
+            const buffer = await file.arrayBuffer();
+            const pdfDoc = await PDFLib.PDFDocument.load(buffer);
+            const pages = await resultPDF.copyPages(pdfDoc, pdfDoc.getPageIndices());
+            pages.forEach((page) => {
+                resultPDF.addPage(page);
+            });
+        }
 
-        pages1.forEach((page) => {
-            pdfDoc.addPage(page);
-        });
-
-        pages2.forEach((page) => {
-            pdfDoc.addPage(page);
-        });
-
-        const combinedPdfBytes = await pdfDoc.save();
+        const combinedPdfBytes = await resultPDF.save();
         const combinedPdfBlob = new Blob([combinedPdfBytes], { type: 'application/pdf' });
 
         const downloadLink = document.createElement('a');
@@ -45,6 +43,12 @@ async function combinePDFs() {
 }
 
 function clearFiles() {
-    document.getElementById('file1').value = '';
-    document.getElementById('file2').value = '';
+    
+    const elements = [
+        ...document.getElementsByTagName('input')
+    ];
+
+    for (var element of elements) {
+        element.value = '';
+    }
 }
