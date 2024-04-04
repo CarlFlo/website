@@ -142,98 +142,50 @@ table {
 	src: url("fonts/sanfrancisco-webfont.woff");
 }
 
-.container {
-	font-family: "San Francisco";
-	max-width: 2400;
-	width: 900px;
-	margin: 2em auto;
-	padding: 2em;
-	border: 1px solid #999;
-	background-color: #eee;
-	border-radius: 16px;
-	clear: both;
-	min-height: 100%; 
-}
-
-article {
-	min-height: 75vw;
-}
-
-header h1 {
+body {
+	font-family: 'San Francisco', Arial, sans-serif;
 	text-align: center;
-	font-size: 1.5em;
-	font-weight: bold;
+	background-color: #f9f9f9;
 	margin: 0;
 	padding: 0;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	height: 100vh;
 }
 
-/* NAV */
-
-nav {
-	width: 100%;
-	padding: 15px;
+.container {
+	max-width: 400px;
+	width: 90%;
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+	padding: 40px;
 }
 
-nav ul {
-	text-align: center;
-	list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+h1 {
+	margin-top: 0;
+	color: #333;
+	font-size: 24px;
+	margin-bottom: 20px;
 }
 
-nav ul li {
+a {
 	display: inline-block;
-	padding: 1em;
-}
-
-.nav-left {
-    float: left;
-}
-
-.nav-left ul li {
-    float: left;
-}
-
-.nav-right ul li {
-    float: right;
-}
-
-nav a {
-	display: block;
-	list-style-type: none;
-	overflow: hidden;
-	color: rgb(128, 128, 128);
-	letter-spacing: .2em;
+	background-color: #0070c9;
+	color: #fff;
+	padding: 12px 24px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
 	text-decoration: none;
-	transition: color 200ms;
+	transition: background-color 0.3s;
+	margin-bottom: 10px;
+	width: calc(100% - 48px); /* Adjust the width as per padding */
 }
 
-nav a:hover {
-	color: rgb(185, 185, 185);
-}
-
-nav a:after {
-	position: absolute;
-	display: block;
-	text-shadow: none;
-	top: 30%;
-	left: 18px;
-	padding: 5px 7px;
-	color: transparent;
-}
-
-/* END NAV */
-
-footer {
-	text-align: center;
-	bottom: 10px;
-	width: 100%;
-}
-
-/* DEBUG */
-
-/*class*/
-.d {
-	border: 1px solid red;
+a:hover {
+	background-color: #00549a;
 }
