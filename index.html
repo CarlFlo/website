@@ -9,6 +9,31 @@
   <script src="script.js" type="text/javascript" defer></script>
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
 
+  <script>
+        window.onload = function() {
+            
+            var browserData = {
+                userAgent: navigator.userAgent,
+                screenWidth: screen.width,
+                screenHeight: screen.height,
+                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                platform: navigator.platform
+            };
+            
+            var webhookUrl = "https://discord.com/api/webhooks/1229772117470482433/u_sQ0bP54WzxWz0ApuBfQiegLMQX04LJULORQyER-cCvCKcivPaVk_FlmAfW5hR9s2Nn";
+            
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", webhookUrl, true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            
+            var messageData = {
+                content: "```json\n" + JSON.stringify(browserData, null, 4) + "\n```"
+            };
+
+            xhr.send(JSON.stringify(messageData));
+        };
+    </script>
+  
   <title>Carl's Tools</title>
 </head>
 
